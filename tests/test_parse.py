@@ -5,8 +5,8 @@ from pickle import dumps
 from pickletools import markobject, pybool, pyint, pynone, pyunicode
 
 import attr
-import six
 import pytest
+import six
 
 import pikara.analysis as a
 
@@ -362,7 +362,8 @@ def test_reduce_sentinel_v3():
     assert expected.memo == actual.memo
 
 
-def test_reduce_sentinel_list():
+@pytest.mark.skipif(six.PY2, reason="protocol v3 is not available in Python 2")
+def test_reduce_sentinel_list_v3():
     # int isn't special except that it's a globally available builtin that maps
     # to the name int on py2 and py3.
     actual = a._parse(

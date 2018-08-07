@@ -199,8 +199,9 @@ def test_single_item_dict(proto, maxproto):
     anything other than MARK DICT (effectively a an empty dictionary) and then
     SETITEM'ing individual items on it, though.
     """
+    intish = intish_type(proto)
     actual = _extract_brine(pickle.dumps({1: 2}, protocol=proto))
-    expected = _Brine(shape={1: pickled_int}, maxproto=maxproto)
+    expected = _Brine(shape={1: intish}, maxproto=maxproto)
     assert expected.shape == actual.shape
     assert expected.maxproto == actual.maxproto
 
@@ -255,9 +256,10 @@ def test_explicit_stackslice_multi_item_dict(proto, maxproto):
 
 @parametrize_proto()
 def test_multi_item_dict(proto, maxproto):
+    intish = intish_type(proto)
     actual = _extract_brine(pickle.dumps({1: 2, 3: 4}, protocol=proto))
     expected = _Brine(
-        shape={1: pickled_int, 3: pickled_int}, maxproto=maxproto
+        shape={1: intish, 3: intish}, maxproto=maxproto
     )
     assert expected.shape == actual.shape
     assert expected.maxproto == actual.maxproto
