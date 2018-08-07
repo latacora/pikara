@@ -1,8 +1,7 @@
 import pickle
 
-import six
-
 import pytest
+import six
 
 from pikara.analysis import pickled_bool, pickled_int, pickled_int_or_bool
 

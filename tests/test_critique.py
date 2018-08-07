@@ -1,9 +1,9 @@
 from pickle import POP, PROTO, STOP
 
+from pytest import raises
 from six import int2byte
 
 from pikara import analysis as a
-from pytest import raises
 
 
 try:
