@@ -6,6 +6,7 @@ from pickletools import markobject, pybool, pyint, pynone, pyunicode
 
 import attr
 import six
+import pytest
 
 import pikara.analysis as a
 
@@ -287,7 +288,8 @@ class NullReduce(object):
         return NullReduce, ()
 
 
-def test_reduce():
+@pytest.mark.skipif(six.PY2, reason="protocol v3 is not available in Python 2")
+def test_reduce_v3():
     actual = a._parse(dumps(NullReduce(), protocol=3))
     g_nr = actual.global_objects[("tests.test_parse", "NullReduce")]
     expected = _PR(
@@ -324,7 +326,8 @@ class ReduceSentinel(object):
         return ReduceSentinel, (self.s,)
 
 
-def test_reduce_sentinel():
+@pytest.mark.skipif(six.PY2, reason="protocol v3 is not available in Python 2")
+def test_reduce_sentinel_v3():
     # int isn't special except that it's a globally available builtin that maps
     # to the name int on py2 and py3.
     actual = a._parse(dumps(ReduceSentinel(int), protocol=3))
